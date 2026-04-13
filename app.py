@@ -1,6 +1,8 @@
-from __future__ import annotations
 
+import os
 import sys
+
+from flask import jsonify
 
 from app import create_app
 from app.extensions import db
@@ -10,12 +12,15 @@ from app.seed import seed_demo_data
 app = create_app()
 
 
+@app.get('/healthz')
+def healthz():
+    return jsonify({'ok': True}), 200
+
+
 def init_db(force: bool = False) -> None:
     with app.app_context():
-        if force:
-            db.drop_all()
         db.create_all()
-        seed_demo_data(force=False)
+        seed_demo_data(force=force)
         print('Database initialized and demo data loaded.')
 
 
@@ -33,4 +38,5 @@ if __name__ == '__main__':
         else:
             raise SystemExit(f'Unknown command: {command}')
     else:
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        port = int(os.getenv('PORT', '5000'))
+        app.run(host='0.0.0.0', port=port, debug=os.getenv('FLASK_DEBUG', 'false').lower() == 'true')
