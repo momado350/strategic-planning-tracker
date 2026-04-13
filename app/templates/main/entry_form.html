@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3 mb-4">{{ title }}</h1>
+<form method="post" class="form-section">
+  {{ form.hidden_tag() }}
+  <div class="row g-3">
+    <div class="col-md-3">{{ form.entry_month.label(class='form-label') }}{{ form.entry_month(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.branch_id.label(class='form-label') }}{{ form.branch_id(class='form-select') }}</div>
+    <div class="col-md-3">{{ form.goal_id.label(class='form-label') }}{{ form.goal_id(class='form-select') }}</div>
+    <div class="col-md-3">{{ form.program_area_id.label(class='form-label') }}{{ form.program_area_id(class='form-select') }}</div>
+    <div class="col-md-6">{{ form.service_name.label(class='form-label') }}{{ form.service_name(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.audience_group.label(class='form-label') }}{{ form.audience_group(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.partner_name.label(class='form-label') }}{{ form.partner_name(class='form-control') }}</div>
+    <div class="col-md-2 form-check ms-2">{{ form.multilingual_support(class='form-check-input') }} {{ form.multilingual_support.label(class='form-check-label') }}</div>
+    <div class="col-md-3 form-check ms-2">{{ form.inclusive_design(class='form-check-input') }} {{ form.inclusive_design.label(class='form-check-label') }}</div>
+    <div class="col-md-3 form-check ms-2">{{ form.referral_support(class='form-check-input') }} {{ form.referral_support.label(class='form-check-label') }}</div>
+    <div class="col-md-2">{{ form.sessions_offered.label(class='form-label') }}{{ form.sessions_offered(class='form-control') }}</div>
+    <div class="col-md-2">{{ form.attendance_or_uses.label(class='form-label') }}{{ form.attendance_or_uses(class='form-control') }}</div>
+    <div class="col-md-2">{{ form.unique_users.label(class='form-label') }}{{ form.unique_users(class='form-control') }}</div>
+    <div class="col-md-2">{{ form.completions.label(class='form-label') }}{{ form.completions(class='form-control') }}</div>
+    <div class="col-md-2">{{ form.referrals_made.label(class='form-label') }}{{ form.referrals_made(class='form-control') }}</div>
+    <div class="col-md-2">{{ form.materials_or_resource_uses.label(class='form-label') }}{{ form.materials_or_resource_uses(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.avg_satisfaction.label(class='form-label') }}{{ form.avg_satisfaction(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.belonging_gain_pct.label(class='form-label') }}{{ form.belonging_gain_pct(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.ease_of_use_pct.label(class='form-label') }}{{ form.ease_of_use_pct(class='form-control') }}</div>
+    <div class="col-12">{{ form.notes.label(class='form-label') }}{{ form.notes(class='form-control', rows=3) }}</div>
+  </div>
+  <div class="mt-4">{{ form.submit(class='btn btn-primary') }}</div>
+</form>
+{% endblock %}

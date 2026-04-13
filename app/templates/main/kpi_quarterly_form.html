@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3 mb-2">Quarterly KPI update</h1>
+<p class="text-muted">{{ item.name }}</p>
+<form method="post" class="form-section">
+  {{ form.hidden_tag() }}
+  <div class="row g-3">
+    <div class="col-md-3">{{ form.year.label(class='form-label') }}{{ form.year(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.quarter.label(class='form-label') }}{{ form.quarter(class='form-select') }}</div>
+    <div class="col-md-3">{{ form.actual_value.label(class='form-label') }}{{ form.actual_value(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.target_value.label(class='form-label') }}{{ form.target_value(class='form-control', placeholder=item.annual_target) }}</div>
+    <div class="col-12">{{ form.notes.label(class='form-label') }}{{ form.notes(class='form-control', rows=3) }}</div>
+  </div>
+  <div class="mt-4">{{ form.submit(class='btn btn-primary') }}</div>
+</form>
+{% endblock %}

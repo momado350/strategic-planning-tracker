@@ -1,0 +1,78 @@
+body {
+  background: #f5f7fb;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+
+.app-navbar {
+  box-shadow: 0 8px 24px rgba(25, 35, 58, 0.05);
+}
+
+.app-nav-tabs {
+  gap: 0.35rem;
+}
+
+.app-nav-tabs .nav-link {
+  position: relative;
+  border-radius: 999px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.app-nav-tabs .nav-link.is-active {
+  background: #0d6efd;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(13, 110, 253, 0.22);
+  transform: translateY(-1px);
+}
+
+.app-nav-tabs .nav-link.is-inactive {
+  color: #6b7280 !important;
+  background: transparent;
+  opacity: 0.78;
+}
+
+.app-nav-tabs .nav-link.is-inactive:hover,
+.app-nav-tabs .nav-link.is-inactive:focus {
+  background: #eef2ff;
+  color: #1f2937 !important;
+  opacity: 1;
+}
+
+.metric-card {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgba(25, 35, 58, 0.08);
+}
+
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.status-pill {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-on_track { background: #d1fae5; color: #065f46; }
+.status-watch { background: #fef3c7; color: #92400e; }
+.status-needs_attention { background: #fee2e2; color: #991b1b; }
+.status-not_started { background: #e5e7eb; color: #374151; }
+
+.table thead th {
+  white-space: nowrap;
+}
+
+.form-section {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: 0 8px 24px rgba(25, 35, 58, 0.06);
+}

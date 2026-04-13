@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+  <div>
+    <h1 class="h3 mb-1">{{ priority.name }}</h1>
+    <p class="text-muted mb-0">{{ priority.statement }}</p>
+  </div>
+  <form class="d-flex gap-2" method="get">
+    <input type="number" class="form-control" name="year" value="{{ year }}" min="2020" max="2100">
+    <button class="btn btn-primary">Change year</button>
+  </form>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3"><div class="card metric-card"><div class="card-body"><div class="text-muted small">Monthly records</div><div class="metric-value">{{ totals.entries }}</div></div></div></div>
+  <div class="col-md-3"><div class="card metric-card"><div class="card-body"><div class="text-muted small">Attendance / uses</div><div class="metric-value">{{ totals.attendance }}</div></div></div></div>
+  <div class="col-md-3"><div class="card metric-card"><div class="card-body"><div class="text-muted small">Unique users</div><div class="metric-value">{{ totals.unique_users }}</div></div></div></div>
+  <div class="col-md-3"><div class="card metric-card"><div class="card-body"><div class="text-muted small">Referrals made</div><div class="metric-value">{{ totals.referrals }}</div></div></div></div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-8">
+    <div class="card metric-card">
+      <div class="card-body">
+        <h2 class="h5 mb-3">Board KPIs</h2>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle">
+            <thead>
+              <tr><th>KPI</th><th>Target</th><th>Annual actual</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              {% for kpi in board_metrics %}
+              {% set actual = kpi.annual_actual_for_year(year) %}
+              {% set latest = (kpi.quarterly_actuals | selectattr('year', 'equalto', year) | list | last) %}
+              <tr>
+                <td>
+                  <div class="fw-semibold">{{ kpi.name }}</div>
+                  <div class="small text-muted">{{ kpi.goal.code if kpi.goal else '' }}</div>
+                </td>
+                <td>{{ kpi.annual_target if kpi.annual_target is not none else '—' }} {{ kpi.unit_label or '' }}</td>
+                <td>{{ actual if actual is not none else '—' }} {{ kpi.unit_label or '' }}</td>
+                <td>
+                  {% set status = latest.status if latest else 'not_started' %}
+                  <span class="status-pill status-{{ status }}">{{ status.replace('_', ' ')|title }}</span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card metric-card mb-3"><div class="card-body"><div class="text-muted small">Average satisfaction</div><div class="metric-value">{{ totals.avg_satisfaction if totals.avg_satisfaction is not none else '—' }}</div></div></div>
+    <div class="card metric-card mb-3"><div class="card-body"><div class="text-muted small">Average belonging gain %</div><div class="metric-value">{{ totals.avg_belonging if totals.avg_belonging is not none else '—' }}</div></div></div>
+    <div class="card metric-card"><div class="card-body"><div class="text-muted small">Multilingual support used in entries</div><div class="metric-value">{{ totals.multilingual_share if totals.multilingual_share is not none else '—' }}{% if totals.multilingual_share is not none %}%{% endif %}</div></div></div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card metric-card">
+      <div class="card-body">
+        <h2 class="h5">Status summary</h2>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item d-flex justify-content-between"><span>On track</span><strong>{{ status_counts['on_track'] }}</strong></li>
+          <li class="list-group-item d-flex justify-content-between"><span>Watch</span><strong>{{ status_counts['watch'] }}</strong></li>
+          <li class="list-group-item d-flex justify-content-between"><span>Needs attention</span><strong>{{ status_counts['needs_attention'] }}</strong></li>
+          <li class="list-group-item d-flex justify-content-between"><span>Not started</span><strong>{{ status_counts['not_started'] }}</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card metric-card">
+      <div class="card-body">
+        <h2 class="h5">Recent monthly entries</h2>
+        <div class="table-responsive">
+          <table class="table table-sm">
+            <thead><tr><th>Month</th><th>Branch</th><th>Service</th><th>Users</th></tr></thead>
+            <tbody>
+              {% for row in latest_entries %}
+              <tr>
+                <td>{{ row.entry_month.strftime('%b %Y') }}</td>
+                <td>{{ row.branch.name }}</td>
+                <td>{{ row.service_name }}</td>
+                <td>{{ row.unique_users }}</td>
+              </tr>
+              {% else %}
+              <tr><td colspan="4" class="text-muted">No entries yet.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

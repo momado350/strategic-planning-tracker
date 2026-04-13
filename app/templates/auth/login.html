@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-5 col-lg-4">
+    <div class="card metric-card">
+      <div class="card-body p-4">
+        <h2 class="h4 mb-2">Sign in</h2>
+        <p class="text-muted">Use the seeded demo account or your own admin account.</p>
+        <form method="post">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.email.label(class='form-label') }}
+            {{ form.email(class='form-control', placeholder='admin@example.com') }}
+          </div>
+          <div class="mb-3">
+            {{ form.password.label(class='form-label') }}
+            {{ form.password(class='form-control', placeholder='password123') }}
+          </div>
+          {{ form.submit(class='btn btn-primary w-100') }}
+        </form>
+        <div class="mt-4 small text-muted">
+          Demo login: <strong>admin@example.com</strong> / <strong>password123</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

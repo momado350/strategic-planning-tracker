@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+  <div>
+    <h1 class="h3 mb-1">Monthly data entry</h1>
+    <p class="text-muted mb-0">Track branch activity, multilingual support, belonging outcomes, and referrals.</p>
+  </div>
+  <div class="d-flex gap-2">
+    <a href="{{ url_for('main.export_entries', year=year) }}" class="btn btn-outline-secondary">Export CSV</a>
+    {% if current_user.can_edit() %}<a href="{{ url_for('main.entry_new') }}" class="btn btn-primary">New entry</a>{% endif %}
+  </div>
+</div>
+<form class="row g-2 mb-3">
+  <div class="col-md-2"><input type="number" name="year" value="{{ year }}" class="form-control"></div>
+  <div class="col-md-3"><select name="branch_id" class="form-select"><option value="">All branches</option>{% for branch in branches %}<option value="{{ branch.id }}" {% if branch_id == branch.id %}selected{% endif %}>{{ branch.name }}</option>{% endfor %}</select></div>
+  <div class="col-md-2"><button class="btn btn-outline-primary">Filter</button></div>
+</form>
+<div class="card metric-card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover table-sm align-middle">
+        <thead>
+          <tr>
+            <th>Month</th><th>Branch</th><th>Goal</th><th>Program area</th><th>Service</th><th>Users</th><th>Belonging %</th><th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.entry_month.strftime('%b %Y') }}</td>
+            <td>{{ item.branch.name }}</td>
+            <td>{{ item.goal.code if item.goal else '—' }}</td>
+            <td>{{ item.program_area.name if item.program_area else '—' }}</td>
+            <td>{{ item.service_name }}</td>
+            <td>{{ item.unique_users }}</td>
+            <td>{{ item.belonging_gain_pct if item.belonging_gain_pct is not none else '—' }}</td>
+            <td class="text-end">{% if current_user.can_edit() %}<a class="btn btn-sm btn-outline-secondary" href="{{ url_for('main.entry_edit', entry_id=item.id) }}">Edit</a>{% endif %}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="8" class="text-muted">No entries found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

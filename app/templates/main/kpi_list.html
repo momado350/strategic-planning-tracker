@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1 class="h3 mb-1">KPI tracker</h1>
+    <p class="text-muted mb-0">All KPIs for {{ priority.name }}</p>
+  </div>
+  {% if current_user.can_edit() %}
+  <a href="{{ url_for('main.kpi_new') }}" class="btn btn-primary">New KPI</a>
+  {% endif %}
+</div>
+<div class="card metric-card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr><th>Goal</th><th>KPI</th><th>Baseline</th><th>Annual target</th><th>Level</th><th></th></tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.goal.code if item.goal else '—' }}</td>
+            <td>
+              <div class="fw-semibold">{{ item.name }}</div>
+              <div class="small text-muted">{{ item.measure_type }} · {{ item.data_source }}</div>
+            </td>
+            <td>{{ item.baseline_value if item.baseline_value is not none else '—' }} {{ item.unit_label or '' }}</td>
+            <td>{{ item.annual_target if item.annual_target is not none else '—' }} {{ item.unit_label or '' }}</td>
+            <td>{{ item.dashboard_level }}</td>
+            <td class="text-end">
+              {% if current_user.can_edit() %}
+              <a href="{{ url_for('main.kpi_quarterly_update', kpi_id=item.id) }}" class="btn btn-sm btn-outline-primary">Quarterly update</a>
+              <a href="{{ url_for('main.kpi_edit', kpi_id=item.id) }}" class="btn btn-sm btn-outline-secondary">Edit</a>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6" class="text-muted">No KPIs yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

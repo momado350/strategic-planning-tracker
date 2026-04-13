@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="h3 mb-4">{{ title }}</h1>
+<form method="post" class="form-section">
+  {{ form.hidden_tag() }}
+  <div class="row g-3">
+    <div class="col-md-6">{{ form.goal_id.label(class='form-label') }}{{ form.goal_id(class='form-select') }}</div>
+    <div class="col-md-6">{{ form.name.label(class='form-label') }}{{ form.name(class='form-control') }}</div>
+    <div class="col-12">{{ form.community_need.label(class='form-label') }}{{ form.community_need(class='form-control', rows=2) }}</div>
+    <div class="col-12">{{ form.definition.label(class='form-label') }}{{ form.definition(class='form-control', rows=3) }}</div>
+    <div class="col-md-4">{{ form.measure_type.label(class='form-label') }}{{ form.measure_type(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.data_source.label(class='form-label') }}{{ form.data_source(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.frequency.label(class='form-label') }}{{ form.frequency(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.owner.label(class='form-label') }}{{ form.owner(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.target_approach.label(class='form-label') }}{{ form.target_approach(class='form-control') }}</div>
+    <div class="col-md-4">{{ form.dashboard_level.label(class='form-label') }}{{ form.dashboard_level(class='form-select') }}</div>
+    <div class="col-md-3">{{ form.baseline_value.label(class='form-label') }}{{ form.baseline_value(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.annual_target.label(class='form-label') }}{{ form.annual_target(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.unit_label.label(class='form-label') }}{{ form.unit_label(class='form-control') }}</div>
+    <div class="col-md-3">{{ form.sort_order.label(class='form-label') }}{{ form.sort_order(class='form-control') }}</div>
+    <div class="col-12 form-check ms-2">{{ form.is_board_metric(class='form-check-input') }} {{ form.is_board_metric.label(class='form-check-label') }}</div>
+  </div>
+  <div class="mt-4">{{ form.submit(class='btn btn-primary') }}</div>
+</form>
+{% endblock %}
