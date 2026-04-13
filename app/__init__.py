@@ -52,3 +52,5 @@ def register_shell_context(app: Flask) -> None:
     @app.shell_context_processor
     def shell_context():
         return {'db': db, 'models': models}
+
+app = create_app()
