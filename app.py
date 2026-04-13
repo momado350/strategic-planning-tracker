@@ -9,7 +9,11 @@ from app.extensions import db
 from app.seed import seed_demo_data
 
 
+
 app = create_app()
+
+with app.app_context():
+    db.create_all()
 
 
 @app.get('/healthz')
